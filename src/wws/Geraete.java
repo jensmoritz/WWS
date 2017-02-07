@@ -1,6 +1,8 @@
 
 package wws;
 
+//Testkommentar von Moritz
+
 public class Geraete {
     
     private int KlassenID;
