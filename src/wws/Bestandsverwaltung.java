@@ -3,7 +3,9 @@ package wws;
 
 
 import java.sql.*;
+import java.text.SimpleDateFormat; 
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -15,7 +17,7 @@ public class Bestandsverwaltung extends javax.swing.JFrame {
         initComponents();
         Show_Geraete_In_JTable();
     }
-   
+
     public ArrayList<Geraete> getGeraeteList()
     {
         ArrayList<Geraete> getGeraeteList = new ArrayList<Geraete>();
@@ -23,8 +25,8 @@ public class Bestandsverwaltung extends javax.swing.JFrame {
         Connection connection = DBConnection.getConnection2();
         
         
-    //    String query = "SELECT * FROM `Geraeteklasse` ORDER BY KlassenID";
-        String query = "SELECT * FROM `Geraeteklasse`  LEFT JOIN  ORDER BY KlassenID";
+        String query = "SELECT * FROM `Geraeteklasse` ORDER BY KlassenID";
+    //  String query = "SELECT * FROM `Geraeteklasse`  LEFT JOIN  ORDER BY KlassenID";
         Statement st;
         ResultSet rs;
         
@@ -113,6 +115,10 @@ public class Bestandsverwaltung extends javax.swing.JFrame {
     jButton_update = new javax.swing.JButton();
     jButton_delete = new javax.swing.JButton();
     menueaufruf = new javax.swing.JButton();
+    jTextField_zubuchen = new javax.swing.JTextField();
+    jTextField_abbuchen = new javax.swing.JTextField();
+    jButton1 = new javax.swing.JButton();
+    jButton2 = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -147,7 +153,7 @@ public class Bestandsverwaltung extends javax.swing.JFrame {
     jScrollPane1.setViewportView(jTable_Display_Geraete);
 
     jButton_insert.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-    jButton_insert.setText("Insert");
+    jButton_insert.setText("Clear");
     jButton_insert.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         jButton_insertActionPerformed(evt);
@@ -177,29 +183,71 @@ public class Bestandsverwaltung extends javax.swing.JFrame {
       }
     });
 
+    jTextField_zubuchen.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+    jTextField_zubuchen.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jTextField_zubuchenActionPerformed(evt);
+      }
+    });
+
+    jTextField_abbuchen.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+    jTextField_abbuchen.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jTextField_abbuchenActionPerformed(evt);
+      }
+    });
+
+    jButton1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+    jButton1.setText("Eingang");
+    jButton1.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton1ActionPerformed(evt);
+      }
+    });
+
+    jButton2.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+    jButton2.setText("Ausgang");
+    jButton2.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton2ActionPerformed(evt);
+      }
+    });
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addGap(65, 65, 65)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-              .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(jTextField_klassenid, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(jTextField_bezeichnung, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
-          .addGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-              .addComponent(menueaufruf, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(jButton_insert, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(65, 65, 65)
+            .addComponent(menueaufruf, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jButton_update, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jButton_delete)))
+            .addComponent(jButton_delete))
+          .addGroup(layout.createSequentialGroup()
+            .addGap(37, 37, 37)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+              .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                  .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                  .addComponent(jTextField_klassenid, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addComponent(jTextField_bezeichnung, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+              .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                  .addComponent(jButton_insert, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                  .addComponent(jTextField_zubuchen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addComponent(jTextField_abbuchen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(97, 97, 97)))))
         .addGap(18, 18, 18)
         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addContainerGap(28, Short.MAX_VALUE))
@@ -209,40 +257,60 @@ public class Bestandsverwaltung extends javax.swing.JFrame {
       .addGroup(layout.createSequentialGroup()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(layout.createSequentialGroup()
-            .addGap(90, 90, 90)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-              .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addGroup(layout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addComponent(jTextField_klassenid)))
+            .addGap(94, 94, 94)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+              .addComponent(jTextField_klassenid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGap(18, 18, 18)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
               .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
               .addComponent(jTextField_bezeichnung))
-            .addGap(171, 171, 171)
+            .addGap(34, 34, 34)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+              .addComponent(jTextField_zubuchen)
+              .addComponent(jButton1))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+              .addComponent(jTextField_abbuchen)
+              .addComponent(jButton2))
+            .addGap(20, 20, 20)
+            .addComponent(jButton_insert, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(18, 18, 18)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
               .addComponent(jButton_delete, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(jButton_update, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(jButton_insert, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+              .addComponent(jButton_update, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGap(106, 106, 106))
           .addGroup(layout.createSequentialGroup()
             .addGap(50, 50, 50)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         .addComponent(menueaufruf, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(97, Short.MAX_VALUE))
+        .addContainerGap(87, Short.MAX_VALUE))
     );
 
     pack();
   }// </editor-fold>//GEN-END:initComponents
 
+
+  
+  
     private void jButton_insertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_insertActionPerformed
         
-        String query = "INSERT INTO `Geraeteklasse`(`KlassenID`,`Bezeichnung`) VALUES ('"+jTextField_klassenid.getText()+"','"+jTextField_bezeichnung.getText()+"')";
+      this.dispose();
+      Bestandsverwaltung mm = new Bestandsverwaltung();
+      mm.show();
         
-        executeSQLQuery(query, "Inserted");
     }//GEN-LAST:event_jButton_insertActionPerformed
 
+        static String printSimpleDateFormat() { 
+        SimpleDateFormat formatter = new SimpleDateFormat( 
+                "yyyy-MM-dd HH:mm:ss"); 
+        Date currentTime = new Date();
+        return formatter.format(currentTime);
+    //    System.out.println(formatter.format(currentTime));        // 2012.04.14 - 21:34:07  
+    } 
+    
+    
     private void jButton_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_updateActionPerformed
         
         String query = "UPDATE `Geraeteklasse` SET `Bezeichnung`='"+jTextField_bezeichnung.getText()+"' WHERE KlassenID="+jTextField_klassenid.getText();
@@ -276,6 +344,30 @@ public class Bestandsverwaltung extends javax.swing.JFrame {
   private void jTextField_bezeichnungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_bezeichnungActionPerformed
     // TODO add your handling code here:
   }//GEN-LAST:event_jTextField_bezeichnungActionPerformed
+
+  private void jTextField_zubuchenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_zubuchenActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_jTextField_zubuchenActionPerformed
+
+  private void jTextField_abbuchenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_abbuchenActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_jTextField_abbuchenActionPerformed
+
+  private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+    String query = "INSERT INTO `Bestand`(`KlassenID`,`BenutzerID`,`Zubuchung`,`Datum`) VALUES ('"+jTextField_klassenid.getText()+"','"+DBConnection.nUserId+"','"+jTextField_zubuchen.getText()+"','"+printSimpleDateFormat()+"')";
+
+    executeSQLQuery(query, "Inserted");
+    // TODO add your handling code here:
+  }//GEN-LAST:event_jButton1ActionPerformed
+
+  private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+    String query = "INSERT INTO `Bestand`(`KlassenID`,`BenutzerID`,`Abbuchung`,`Datum`) VALUES ('"+jTextField_klassenid.getText()+"','"+DBConnection.nUserId+"','"+jTextField_abbuchen.getText()+"','"+printSimpleDateFormat()+"')";
+
+    executeSQLQuery(query, "Inserted");
+    // TODO add your handling code here:
+  }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -314,6 +406,8 @@ public class Bestandsverwaltung extends javax.swing.JFrame {
     }
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
+  private javax.swing.JButton jButton1;
+  private javax.swing.JButton jButton2;
   private javax.swing.JButton jButton_delete;
   private javax.swing.JButton jButton_insert;
   private javax.swing.JButton jButton_update;
@@ -321,8 +415,10 @@ public class Bestandsverwaltung extends javax.swing.JFrame {
   private javax.swing.JLabel jLabel3;
   private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JTable jTable_Display_Geraete;
+  private javax.swing.JTextField jTextField_abbuchen;
   private javax.swing.JTextField jTextField_bezeichnung;
   private javax.swing.JTextField jTextField_klassenid;
+  private javax.swing.JTextField jTextField_zubuchen;
   private javax.swing.JButton menueaufruf;
   // End of variables declaration//GEN-END:variables
 

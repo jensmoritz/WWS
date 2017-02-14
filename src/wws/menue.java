@@ -30,27 +30,35 @@ public class menue extends javax.swing.JFrame {
     menue_etikettendruck = new javax.swing.JButton();
     menue_rechnerverwaltung = new javax.swing.JButton();
     menue_geratepruppenverwaltung = new javax.swing.JButton();
+    menue_geratepruppenverwaltung1 = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-    menue_etikettendruck.setText("Etiketten drucken");
+    menue_etikettendruck.setText("Hardwaregruppen - Ein-/Ausgang");
     menue_etikettendruck.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         menue_etikettendruckActionPerformed(evt);
       }
     });
 
-    menue_rechnerverwaltung.setText("Rechner verwalten");
+    menue_rechnerverwaltung.setText("Einzelrechner verwalten");
     menue_rechnerverwaltung.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         menue_rechnerverwaltungActionPerformed(evt);
       }
     });
 
-    menue_geratepruppenverwaltung.setText("Geräteklassen");
+    menue_geratepruppenverwaltung.setText("Bestand anzeigen");
     menue_geratepruppenverwaltung.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         menue_geratepruppenverwaltungActionPerformed(evt);
+      }
+    });
+
+    menue_geratepruppenverwaltung1.setText("Hardwaregruppen");
+    menue_geratepruppenverwaltung1.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        menue_geratepruppenverwaltung1ActionPerformed(evt);
       }
     });
 
@@ -59,23 +67,27 @@ public class menue extends javax.swing.JFrame {
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addGap(55, 55, 55)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-          .addComponent(menue_geratepruppenverwaltung, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
-          .addComponent(menue_rechnerverwaltung, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
-          .addComponent(menue_etikettendruck, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        .addContainerGap(493, Short.MAX_VALUE))
+        .addGap(101, 101, 101)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+          .addComponent(menue_geratepruppenverwaltung, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(menue_geratepruppenverwaltung1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(menue_etikettendruck, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 149, Short.MAX_VALUE)
+        .addComponent(menue_rechnerverwaltung, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(100, 100, 100))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addGap(38, 38, 38)
-        .addComponent(menue_etikettendruck, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(66, 66, 66)
-        .addComponent(menue_rechnerverwaltung, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(76, 76, 76)
+        .addGap(88, 88, 88)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(menue_etikettendruck, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(menue_rechnerverwaltung, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addGap(74, 74, 74)
         .addComponent(menue_geratepruppenverwaltung, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(179, Short.MAX_VALUE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+        .addComponent(menue_geratepruppenverwaltung1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(120, 120, 120))
     );
 
     pack();
@@ -83,13 +95,17 @@ public class menue extends javax.swing.JFrame {
 
     private void menue_etikettendruckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menue_etikettendruckActionPerformed
         // TODO add your handling code here:
+        this.dispose();
+        Bestandsverwaltung mm = new Bestandsverwaltung();
+        mm.show();
+        
     }//GEN-LAST:event_menue_etikettendruckActionPerformed
 
     private void menue_rechnerverwaltungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menue_rechnerverwaltungActionPerformed
 
-                    this.dispose();
-                    NewJFrame mm = new NewJFrame();
-                    mm.show();
+        this.dispose();
+        NewJFrame mm = new NewJFrame();
+        mm.show();
 
         // TODO add your handling code here:
     }//GEN-LAST:event_menue_rechnerverwaltungActionPerformed
@@ -100,6 +116,10 @@ public class menue extends javax.swing.JFrame {
                     mm.show();
 // TODO add your handling code here:
   }//GEN-LAST:event_menue_geratepruppenverwaltungActionPerformed
+
+  private void menue_geratepruppenverwaltung1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menue_geratepruppenverwaltung1ActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_menue_geratepruppenverwaltung1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -139,6 +159,7 @@ public class menue extends javax.swing.JFrame {
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton menue_etikettendruck;
   private javax.swing.JButton menue_geratepruppenverwaltung;
+  private javax.swing.JButton menue_geratepruppenverwaltung1;
   private javax.swing.JButton menue_rechnerverwaltung;
   // End of variables declaration//GEN-END:variables
 }

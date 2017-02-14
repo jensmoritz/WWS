@@ -23,27 +23,32 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="menue_geratepruppenverwaltung" pref="198" max="32767" attributes="0"/>
-                  <Component id="menue_rechnerverwaltung" pref="198" max="32767" attributes="0"/>
-                  <Component id="menue_etikettendruck" max="32767" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="101" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="menue_geratepruppenverwaltung" min="-2" pref="198" max="-2" attributes="0"/>
+                  <Component id="menue_geratepruppenverwaltung1" min="-2" pref="198" max="-2" attributes="0"/>
+                  <Component id="menue_etikettendruck" min="-2" pref="198" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="493" max="32767" attributes="0"/>
+              <EmptySpace pref="149" max="32767" attributes="0"/>
+              <Component id="menue_rechnerverwaltung" min="-2" pref="198" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-              <Component id="menue_etikettendruck" min="-2" pref="50" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
-              <Component id="menue_rechnerverwaltung" min="-2" pref="49" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="menue_etikettendruck" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
+                  <Component id="menue_rechnerverwaltung" alignment="3" min="-2" pref="49" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
               <Component id="menue_geratepruppenverwaltung" min="-2" pref="53" max="-2" attributes="0"/>
-              <EmptySpace pref="179" max="32767" attributes="0"/>
+              <EmptySpace pref="73" max="32767" attributes="0"/>
+              <Component id="menue_geratepruppenverwaltung1" min="-2" pref="53" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="120" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -51,7 +56,7 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="menue_etikettendruck">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Etiketten drucken"/>
+        <Property name="text" type="java.lang.String" value="Hardwaregruppen - Ein-/Ausgang"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menue_etikettendruckActionPerformed"/>
@@ -59,7 +64,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="menue_rechnerverwaltung">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Rechner verwalten"/>
+        <Property name="text" type="java.lang.String" value="Einzelrechner verwalten"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menue_rechnerverwaltungActionPerformed"/>
@@ -67,10 +72,18 @@
     </Component>
     <Component class="javax.swing.JButton" name="menue_geratepruppenverwaltung">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ger&#xe4;teklassen"/>
+        <Property name="text" type="java.lang.String" value="Bestand anzeigen"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menue_geratepruppenverwaltungActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="menue_geratepruppenverwaltung1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Hardwaregruppen"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menue_geratepruppenverwaltung1ActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
