@@ -5,20 +5,27 @@ public class Bestaende {
     
     private int KlassenID;
     private String Bezeichnung;
+    private int Summe;
     
-    public Bestaende(int GERAETE_KLASSENID, String GERAETE_BEZEICHNUNG)
+    public Bestaende(int BESTAENDE_KLASSENID, String BESTAENDE_BEZEICHNUNG, int BESTAENDE_SUMME)
     {        
-        this.KlassenID = GERAETE_KLASSENID;
-        this.Bezeichnung = GERAETE_BEZEICHNUNG;
+        this.KlassenID = BESTAENDE_KLASSENID;
+        this.Bezeichnung = BESTAENDE_BEZEICHNUNG;
+        this.Summe = BESTAENDE_SUMME;
     }
     
-    public int getKlassenID()
+    public int getKlassenID2()
     {        
         return KlassenID;
     }
     
-    public String getBezeichnung()
+    public String getBezeichnung2()
     {        
         return Bezeichnung;
     }
+    
+    public int getSumme()
+    {        
+        return Summe;
+    } 
 }

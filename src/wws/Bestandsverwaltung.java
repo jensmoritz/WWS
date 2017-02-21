@@ -18,15 +18,16 @@ public class Bestandsverwaltung extends javax.swing.JFrame {
         Show_Geraete_In_JTable();
     }
 
-    public ArrayList<Geraete> getGeraeteList()
+    public ArrayList<Bestaende> getBestandsListe()
     {
-        ArrayList<Geraete> getGeraeteList = new ArrayList<Geraete>();
+        ArrayList<Bestaende> getBestandsListe = new ArrayList<Bestaende>();
     //    Connection connection = getConnection();
         Connection connection = DBConnection.getConnection2();
         
         
-        String query = "SELECT * FROM `Geraeteklasse` ORDER BY KlassenID";
+    //  String query = "SELECT * FROM `Geraeteklasse` ORDER BY KlassenID";
     //  String query = "SELECT * FROM `Geraeteklasse`  LEFT JOIN  ORDER BY KlassenID";
+        String query = "SELECT A.KlassenID, A.Bezeichnung, SUM(B.Buchung) AS Summe FROM `Geraeteklasse`As A Left JOIN `Bestand` As B ON A.KlassenID = B.KlassenID GROUP BY A.KlassenID";
         Statement st;
         ResultSet rs;
         
@@ -35,34 +36,34 @@ public class Bestandsverwaltung extends javax.swing.JFrame {
             st = connection.createStatement();
             //rs = st.executeQuery(query);
             rs = st.executeQuery(query);
-            Geraete GERAETE;
+            Bestaende BESTAENDE;
             
             while(rs.next())
             {
-                GERAETE = new Geraete(rs.getInt("KlassenID"), rs.getString("Bezeichnung"));
-                getGeraeteList.add(GERAETE);
+                BESTAENDE = new Bestaende(rs.getInt("KlassenID"), rs.getString("Bezeichnung"), rs.getInt("Summe"));
+                getBestandsListe.add(BESTAENDE);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return getGeraeteList;
+        return getBestandsListe;
     }
     
     // Zeigt Daten in Tabelle an
     
     public void Show_Geraete_In_JTable()
     {
-        ArrayList<Geraete> list = getGeraeteList();
+        ArrayList<Bestaende> list = getBestandsListe();
         
         DefaultTableModel model = (DefaultTableModel)jTable_Display_Geraete.getModel();
-        Object[] row = new Object[2];
+        Object[] row = new Object[3];
         for(int i = 0; i < list.size(); i++)
         {
-            row[0] = list.get(i).getKlassenID();
-            row[1] = list.get(i).getBezeichnung();
-   /*         row[2] = list.get(i).getHersteller();
-            row[3] = list.get(i).getModell();
-   */         
+            row[0] = list.get(i).getKlassenID2();
+            row[1] = list.get(i).getBezeichnung2();
+            row[2] = list.get(i).getSumme();
+   //         row[3] = list.get(i).getModell();
+            
             model.addRow(row);
         }
     }
@@ -142,7 +143,7 @@ public class Bestandsverwaltung extends javax.swing.JFrame {
 
       },
       new String [] {
-        "KlassenID", "Bezeichnung"
+        "KlassenID", "Bezeichnung", "Bestand"
       }
     ));
     jTable_Display_Geraete.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -355,7 +356,7 @@ public class Bestandsverwaltung extends javax.swing.JFrame {
 
   private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-    String query = "INSERT INTO `Bestand`(`KlassenID`,`BenutzerID`,`Zubuchung`,`Datum`) VALUES ('"+jTextField_klassenid.getText()+"','"+DBConnection.nUserId+"','"+jTextField_zubuchen.getText()+"','"+printSimpleDateFormat()+"')";
+    String query = "INSERT INTO `Bestand`(`KlassenID`,`BenutzerID`,`Buchung`,`Datum`) VALUES ('"+jTextField_klassenid.getText()+"','"+DBConnection.nUserId+"','"+jTextField_zubuchen.getText()+"','"+printSimpleDateFormat()+"')";
 
     executeSQLQuery(query, "Inserted");
     // TODO add your handling code here:
@@ -363,7 +364,7 @@ public class Bestandsverwaltung extends javax.swing.JFrame {
 
   private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-    String query = "INSERT INTO `Bestand`(`KlassenID`,`BenutzerID`,`Abbuchung`,`Datum`) VALUES ('"+jTextField_klassenid.getText()+"','"+DBConnection.nUserId+"','"+jTextField_abbuchen.getText()+"','"+printSimpleDateFormat()+"')";
+    String query = "INSERT INTO `Bestand`(`KlassenID`,`BenutzerID`,`Buchung`,`Datum`) VALUES ('"+jTextField_klassenid.getText()+"','"+DBConnection.nUserId+"','"+jTextField_abbuchen.getText()+"','"+printSimpleDateFormat()+"')";
 
     executeSQLQuery(query, "Inserted");
     // TODO add your handling code here:
