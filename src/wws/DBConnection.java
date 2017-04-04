@@ -19,8 +19,22 @@ public class DBConnection {
 
   //--- Benutzername Passwort
   public static String sUsername = "";
-  public static int nUserId = 0;
+  
+  private static int nUserId = 0;
+  //  public static int nUserId = 0;
+  
+  public static int getnUserId(){
+            
+        return nUserId;
+  }
 
+  public static void setnUserId(int id){
+            
+        nUserId = id;
+        
+  }
+  
+  
   public static Connection getConnection2() {
     if (myConnection == null) {
       try {

@@ -47,6 +47,7 @@ public class Login extends javax.swing.JDialog {
     jButton1 = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+    setPreferredSize(new java.awt.Dimension(1024, 768));
 
     jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
     jLabel1.setText("Username:");
@@ -112,6 +113,7 @@ public class Login extends javax.swing.JDialog {
 
     String sUser = jTextField1.getText();
     String sPwd = jPasswordField1.getPassword().toString();
+    int id = 0;
 
     Connection conn = DBConnection.getConnection2();
 
@@ -133,7 +135,9 @@ public class Login extends javax.swing.JDialog {
           if (rs.next()) {
 
             DBConnection.sUsername = rs.getString("username");
-            DBConnection.nUserId = rs.getInt("id");
+            id = rs.getInt("id");
+            
+            DBConnection.setnUserId(id);
 
             this.dispose();
             //menue mm = new menue();

@@ -22,7 +22,8 @@ public class Start {
     //go.show();
 
     //-- Falls der Benutzer eingeloggt ist, Menü anzeigen
-    if (DBConnection.nUserId > 0) {
+    
+    if (DBConnection.getnUserId() > 0) {
       menue mm = new menue();
       mm.show();
     }

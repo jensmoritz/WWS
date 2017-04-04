@@ -183,6 +183,15 @@ public class NewJFrame extends javax.swing.JFrame {
         jTable_Display_PcsMouseClicked(evt);
       }
     });
+    jTable_Display_Pcs.addAncestorListener(new javax.swing.event.AncestorListener() {
+      public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+        jTable_Display_PcsAncestorAdded(evt);
+      }
+      public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+      }
+      public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+      }
+    });
     jScrollPane1.setViewportView(jTable_Display_Pcs);
 
     jButton_insert.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -330,6 +339,10 @@ public class NewJFrame extends javax.swing.JFrame {
         mm.show();
         // TODO add your handling code here:
     }//GEN-LAST:event_menueaufrufActionPerformed
+
+  private void jTable_Display_PcsAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable_Display_PcsAncestorAdded
+    // TODO add your handling code here:
+  }//GEN-LAST:event_jTable_Display_PcsAncestorAdded
 
     /**
      * @param args the command line arguments
