@@ -22,13 +22,13 @@ public class BuchungenPeripherie extends javax.swing.JFrame {
   /**
    * Creates new form BuchungenPeripherie
    */
-  public BuchungenPeripherie() {
+public BuchungenPeripherie() {
     initComponents();
     Show_Buchungen_In_JTable();
     
     jTextField_Startdatum.setText(printSimpleDateFormat());
     jTextField_Enddatum.setText(printSimpleDateFormat());
-  }
+}
   
 static String printSimpleDateFormat() { 
   
@@ -41,7 +41,7 @@ static String printSimpleDateFormat() {
   //    System.out.println(formatter.format(currentTime));        // 2012.04.14 - 21:34:07  
 }   
   
-  public ArrayList<Buchungen> getBuchungsListe()
+public ArrayList<Buchungen> getBuchungsListe()
   {
     ArrayList<Buchungen> buchungsListe = new ArrayList<Buchungen>();
 
@@ -69,6 +69,37 @@ static String printSimpleDateFormat() {
     }
     return buchungsListe;
   }
+
+public ArrayList<Buchungen> getBuchungsListe(String startdatum, String enddatum)
+  {
+    ArrayList<Buchungen> buchungsListe = new ArrayList<Buchungen>();
+
+    Connection connection = DBConnection.getConnection2();
+
+
+    String query = "SELECT A.BestandID, A.Buchung, B.Bezeichnung, A.BenutzerID, A.Datum FROM `Bestand` As A Left JOIN `Geraeteklasse` As B ON A.KlassenID =B.KlassenID ";
+    query = query + " WHERE (A.Buchung > >6) ORDER BY A.BestandId desc";
+    Statement st;
+    ResultSet rs;
+
+    try
+    {
+        st = connection.createStatement();
+
+        rs = st.executeQuery(query);
+        Buchungen BUCHUNGEN;
+
+        while(rs.next())
+        {
+            BUCHUNGEN = new Buchungen(rs.getInt("BestandID"), rs.getInt("BenutzerID"), rs.getString("Bezeichnung"),rs.getInt("Buchung"), rs.getString("Datum"));
+            buchungsListe.add(BUCHUNGEN);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return buchungsListe;
+  }
+
   
     public void Show_Buchungen_In_JTable()
     {
@@ -84,6 +115,7 @@ static String printSimpleDateFormat() {
             row[3] = list.get(i).getbezeichnung();
             row[4] = list.get(i).getbuchungsDatum();
             model.addRow(row);
+            
         }
     }  
  
@@ -107,12 +139,12 @@ static String printSimpleDateFormat() {
     jList1 = new javax.swing.JList<>();
     jScrollPane3 = new javax.swing.JScrollPane();
     jList2 = new javax.swing.JList<>();
-    jTextField_Startdatum = new javax.swing.JTextField();
-    jTextField_Enddatum = new javax.swing.JTextField();
     jButton2 = new javax.swing.JButton();
     jLabel1 = new javax.swing.JLabel();
     jLabel2 = new javax.swing.JLabel();
     jButton1 = new javax.swing.JButton();
+    jDateChooser_endDatum = new com.toedter.calendar.JDateChooser();
+    jDateChooser_anfangsDatum = new com.toedter.calendar.JDateChooser();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -148,11 +180,7 @@ static String printSimpleDateFormat() {
     });
     jScrollPane3.setViewportView(jList2);
 
-    jTextField_Startdatum.setText("jTextField1");
-
-    jTextField_Enddatum.setText("jTextField7");
-
-    jButton2.setText("Datum-Filtern");
+    jButton2.setText("nach Datum filtern");
     jButton2.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         jButton2ActionPerformed(evt);
@@ -169,6 +197,8 @@ static String printSimpleDateFormat() {
         jButton1ActionPerformed(evt);
       }
     });
+
+    jDateChooser_endDatum.setDateFormatString("yyyy-MM-dd");
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
@@ -200,11 +230,11 @@ static String printSimpleDateFormat() {
                 .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addGap(76, 76, 76)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-              .addComponent(jTextField_Startdatum, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
               .addComponent(jLabel1)
               .addComponent(jLabel2)
-              .addComponent(jTextField_Enddatum, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-              .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+              .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+              .addComponent(jDateChooser_anfangsDatum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+              .addComponent(jDateChooser_endDatum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         .addContainerGap(129, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
@@ -212,24 +242,22 @@ static String printSimpleDateFormat() {
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                  .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                  .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-              .addGroup(layout.createSequentialGroup()
-                .addGap(94, 94, 94)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField_Startdatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)))
+            .addGap(25, 25, 25)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+              .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+          .addGroup(layout.createSequentialGroup()
+            .addGap(94, 94, 94)
+            .addComponent(jLabel1)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jTextField_Enddatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jDateChooser_anfangsDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(11, 11, 11)
+            .addComponent(jLabel2))
           .addGroup(layout.createSequentialGroup()
             .addGap(36, 36, 36)
             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(jDateChooser_endDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -246,7 +274,11 @@ static String printSimpleDateFormat() {
   }// </editor-fold>//GEN-END:initComponents
 
   private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    // TODO add your handling code here:
+
+    String query = "INSERT INTO `Geraeteklasse`(`Bezeichnung`) VALUES ('"+jTextField_bezeichnung.getText()+"')";
+    
+    
+    
   }//GEN-LAST:event_jButton2ActionPerformed
 
   private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -294,6 +326,8 @@ static String printSimpleDateFormat() {
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton jButton1;
   private javax.swing.JButton jButton2;
+  private com.toedter.calendar.JDateChooser jDateChooser_anfangsDatum;
+  private com.toedter.calendar.JDateChooser jDateChooser_endDatum;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JList<String> jList1;
@@ -306,7 +340,5 @@ static String printSimpleDateFormat() {
   private javax.swing.JTextField jTextField2;
   private javax.swing.JTextField jTextField3;
   private javax.swing.JTextField jTextField4;
-  private javax.swing.JTextField jTextField_Enddatum;
-  private javax.swing.JTextField jTextField_Startdatum;
   // End of variables declaration//GEN-END:variables
 }
