@@ -25,7 +25,8 @@ public class Start {
     
     if (DBConnection.getnUserId() > 0) {
       menue mm = new menue();
-      mm.show();
+//      mm.show();
+        mm.setVisible(true);
     }
 
   }

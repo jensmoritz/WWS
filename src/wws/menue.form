@@ -133,7 +133,7 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="menue_rechnerverwaltung">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Verwaltung (Eingang/Ausgang)"/>
+        <Property name="text" type="java.lang.String" value="Rechner Verwaltung"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menue_rechnerverwaltungActionPerformed"/>
@@ -197,7 +197,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="menue_rechnerverwaltung2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&gt; Drucken &lt;"/>
+        <Property name="text" type="java.lang.String" value="Rechner Ein/Ausgang"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menue_rechnerverwaltung2ActionPerformed"/>
