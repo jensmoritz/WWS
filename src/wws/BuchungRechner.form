@@ -32,7 +32,7 @@
                           <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="eingabeanzahl" min="-2" max="-2" attributes="0"/>
+                          <Component id="EingabeAnzahl" min="-2" pref="40" max="-2" attributes="0"/>
                       </Group>
                       <Component id="menueaufruf" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -51,7 +51,7 @@
               <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="PCKlappliste" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="eingabeanzahl" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="EingabeAnzahl" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
@@ -78,20 +78,20 @@
     <Component class="javax.swing.JComboBox" name="PCKlappliste">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="2">
-            <StringItem index="0" value="hallo"/>
-            <StringItem index="1" value="lo"/>
-          </StringArray>
+          <StringArray count="0"/>
         </Property>
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JTextField" name="eingabeanzahl">
+    <Component class="javax.swing.JTextField" name="EingabeAnzahl">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField1"/>
+        <Property name="text" type="java.lang.String" value="zahl"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EingabeAnzahlActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>

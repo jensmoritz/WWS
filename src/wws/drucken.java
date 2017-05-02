@@ -63,7 +63,7 @@ public class drucken implements Printable {
        
     //code 128
 //        String data = "WOW4IK";
-        int width = 140;
+        int width = 100;
         int height = 30;
 
 

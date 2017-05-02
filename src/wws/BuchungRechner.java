@@ -21,6 +21,11 @@ public class BuchungRechner extends javax.swing.JFrame {
     /**
      * Creates new form BuchungRechner
      */
+    
+    private static int aktuellPCKlasse;
+    private static ArrayList<Integer> PCKlassenIDsListe = new ArrayList<>();
+    
+    
     public BuchungRechner() {
         initComponents();
         fillComboBoxItems();
@@ -32,14 +37,15 @@ public class BuchungRechner extends javax.swing.JFrame {
         
         ArrayList<pcklasse> pcListe = getPcList();
         int anzahl = pcListe.size();
-//        DefaultComboBoxModel model = 
+
         String[] itemListe = new String[anzahl];
 //        System.out.println(anzahl);
         for (int i = 0; i < anzahl; i++) {
-//            System.out.println(pcListe.get(i).getHersteller() + pcListe.get(i).getModell());
-            itemListe[i] = pcListe.get(i).getHersteller() + "-" + pcListe.get(i).getModell();
-//            itemListe[i] = "hallo";
-        }
+            itemListe[i] = pcListe.get(i).getHersteller() + pcListe.get(i).getModell();
+            PCKlassenIDsListe.add(pcListe.get(i).getID());
+           
+                   
+        }        
         PCKlappliste.setModel(new javax.swing.DefaultComboBoxModel<>(itemListe));
     }
     
@@ -74,6 +80,30 @@ public class BuchungRechner extends javax.swing.JFrame {
     
 
 
+    private void executeSQLQuery(String query, String message)
+    {
+        Connection conn = DBConnection.getConnection2();
+        Statement st;
+        try
+        {
+            st = conn.createStatement();
+            if((st.executeUpdate(query)) == 1)
+            {
+                 
+            //    DefaultTableModel model = (DefaultTableModel)jTable_Display_Pcs.getModel();
+            //    model.setRowCount(0);
+            //    Show_Pcs_In_JTable();
+                
+                JOptionPane.showMessageDialog(null, "Data "+message+" Succefully");
+            } else{
+                JOptionPane.showMessageDialog(null, "Data Not "+message);    
+            }
+        }catch(Exception ex) 
+        {
+            
+        }
+        
+    }
 
 
 
@@ -90,7 +120,7 @@ public class BuchungRechner extends javax.swing.JFrame {
 
         menueaufruf = new javax.swing.JButton();
         PCKlappliste = new javax.swing.JComboBox<>();
-        eingabeanzahl = new javax.swing.JTextField();
+        EingabeAnzahl = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         DruckenButton = new javax.swing.JButton();
 
@@ -103,9 +133,12 @@ public class BuchungRechner extends javax.swing.JFrame {
             }
         });
 
-        PCKlappliste.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "hallo", "lo" }));
-
-        eingabeanzahl.setText("jTextField1");
+        EingabeAnzahl.setText("zahl");
+        EingabeAnzahl.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EingabeAnzahlActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Anzahl");
 
@@ -129,7 +162,7 @@ public class BuchungRechner extends javax.swing.JFrame {
                             .addGap(68, 68, 68)
                             .addComponent(jLabel1)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(eingabeanzahl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(EingabeAnzahl, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(menueaufruf))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(DruckenButton)
@@ -142,7 +175,7 @@ public class BuchungRechner extends javax.swing.JFrame {
                 .addGap(53, 53, 53)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(PCKlappliste, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(eingabeanzahl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(EingabeAnzahl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(33, 33, 33)
                 .addComponent(DruckenButton)
@@ -166,12 +199,34 @@ public class BuchungRechner extends javax.swing.JFrame {
     }//GEN-LAST:event_menueaufrufActionPerformed
 
     private void DruckenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DruckenButtonActionPerformed
-        // TODO add your handling code here:
+ 
         int cbm = PCKlappliste.getSelectedIndex();
         String cbmInhalt = PCKlappliste.getItemAt(cbm);
-        System.out.println(cbmInhalt);
+//        System.out.println(PCKlassenIDsListe.get(cbm) + "001");
         
+ //       drucken.druckStart(PCKlassenIDsListe.get(cbm) + "001");
+//        drucken.druckStart(cbmInhalt);
+        System.out.println(EingabeAnzahl.getText());
+        
+        //  noch zu machen:
+        // überprüfung, führende Leerzeichen weg etc.
+        //  java.lang.NumberFormatException abfangen bei falscher Eingabe!!
+        int ZahlderLabel = Integer.parseInt(EingabeAnzahl.getText());
+
+        String EinzelQuery = " INSERT INTO PC_Bestand (PCKlassenID) VALUE (" + PCKlassenIDsListe.get(cbm) + ");";
+        String MehrfachQuery = " ";
+        for (int i = 0; i < ZahlderLabel; i++) {
+            MehrfachQuery += EinzelQuery;
+        }
+        System.out.println(MehrfachQuery);
+        executeSQLQuery(MehrfachQuery, "Inserted");       
+
     }//GEN-LAST:event_DruckenButtonActionPerformed
+
+    private void EingabeAnzahlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EingabeAnzahlActionPerformed
+        // TODO add your handling code here:
+        System.out.println("oops");
+    }//GEN-LAST:event_EingabeAnzahlActionPerformed
 
     /**
      * @param args the command line arguments
@@ -210,8 +265,8 @@ public class BuchungRechner extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton DruckenButton;
+    private javax.swing.JTextField EingabeAnzahl;
     private javax.swing.JComboBox<String> PCKlappliste;
-    private javax.swing.JTextField eingabeanzahl;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton menueaufruf;
     // End of variables declaration//GEN-END:variables
