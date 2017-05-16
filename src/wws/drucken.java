@@ -47,7 +47,7 @@ public class drucken implements Printable {
     @Override
     public int print (Graphics g, PageFormat seitenformat, int anzahl) throws PrinterException {
     
-        System.out.println("funk print");
+//        System.out.println("funk print");
         
         
        if (anzahl > 0) {
@@ -91,7 +91,7 @@ public class drucken implements Printable {
     
     public static void druckStart(String s) {
         
-        System.out.println("funk druckStart");
+//        System.out.println("funk druckStart");
         
         PrinterJob job = PrinterJob.getPrinterJob();    
                 
@@ -127,7 +127,7 @@ public class drucken implements Printable {
     
     public static void main (String args[]) {
         
-        System.out.println("funk main");
+//        System.out.println("funk main");
         druckStart ("HM123");
     }
     

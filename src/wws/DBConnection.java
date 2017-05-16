@@ -38,7 +38,9 @@ public class DBConnection {
   public static Connection getConnection2() {
     if (myConnection == null) {
       try {
-        myConnection = DriverManager.getConnection("jdbc:mysql://192.168.151.123/Projekt_WWS", "IT1601", "IT1601");
+//        myConnection = DriverManager.getConnection("jdbc:mysql://192.168.151.117/Projekt_WWS", "IT1601", "IT1601"); 
+        myConnection = DriverManager.getConnection("jdbc:mysql://localhost/Projekt_WWS", "root", "");
+        
       } catch (Exception e) {
         e.printStackTrace();
       }

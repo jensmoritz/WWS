@@ -78,6 +78,7 @@ public class NewJFrame extends javax.swing.JFrame {
         ArrayList<pcklasse> list = getPcList();
         
         DefaultTableModel model = (DefaultTableModel)jTable_Display_Pcs.getModel();
+        model.setRowCount(0);
         Object[] row = new Object[3];
         for(int i = 0; i < list.size(); i++)
         {
@@ -102,8 +103,8 @@ public class NewJFrame extends javax.swing.JFrame {
             {
                 // refresh jtable data
                 
-                DefaultTableModel model = (DefaultTableModel)jTable_Display_Pcs.getModel();
-                model.setRowCount(0);
+//                DefaultTableModel model = (DefaultTableModel)jTable_Display_Pcs.getModel();
+//                model.setRowCount(0);
                 Show_Pcs_In_JTable();
                 
                 JOptionPane.showMessageDialog(null, "Data "+message+" Succefully");
@@ -302,7 +303,7 @@ public class NewJFrame extends javax.swing.JFrame {
     private void jButton_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_deleteActionPerformed
         
         String query = "DELETE FROM `PCKlasse` WHERE PCKlassenID = "+jTextField_wws_id.getText();
-//        System.out.println(query);
+//        System.out.println("button " + query);
         executeSQLQuery(query, "Deleted");
     }//GEN-LAST:event_jButton_deleteActionPerformed
 
