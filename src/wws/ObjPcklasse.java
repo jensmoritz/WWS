@@ -9,13 +9,13 @@ package wws;
  *
  * @author bfw
  */
-public class pcklasse {
+public class ObjPcklasse {
 
     private int id;
     private String hersteller;
     private String modell;
     
-    public pcklasse(int ID, String HERSTELLER, String MODELL)
+    public ObjPcklasse(int ID, String HERSTELLER, String MODELL)
     {        
 
         this.id = ID;

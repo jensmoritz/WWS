@@ -8,9 +8,11 @@ package wws;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.table.*;
 
 /**
  *
@@ -22,7 +24,7 @@ public class BuchungRechner extends javax.swing.JFrame {
      * Creates new form BuchungRechner
      */
     
-    private static int aktuellPCKlasse;
+
     private static ArrayList<Integer> PCKlassenIDsListe = new ArrayList<>();
 
     
@@ -63,9 +65,9 @@ public class BuchungRechner extends javax.swing.JFrame {
     }
    
     
-    private ArrayList<pcklasse> getPcList()
+    private ArrayList<ObjPcklasse> getPcList()
     {
-        ArrayList<pcklasse> pcList = new ArrayList<>();
+        ArrayList<ObjPcklasse> pcList = new ArrayList<>();
     //    Connection connection = getConnection();
         Connection connection = DBConnection.getConnection2();
         
@@ -79,11 +81,11 @@ public class BuchungRechner extends javax.swing.JFrame {
             st = connection.createStatement();
             //rs = st.executeQuery(query);
             rs = st.executeQuery(query);
-            pcklasse PCKlasse;
+            ObjPcklasse PCKlasse;
             
             while(rs.next())
             {
-                PCKlasse = new pcklasse(rs.getInt("PCKlassenID"), rs.getString("Hersteller"), rs.getString("Modell"));
+                PCKlasse = new ObjPcklasse(rs.getInt("PCKlassenID"), rs.getString("Hersteller"), rs.getString("Modell"));
                 pcList.add(PCKlasse);
             }
         } catch (Exception e) {
@@ -92,9 +94,9 @@ public class BuchungRechner extends javax.swing.JFrame {
         return pcList;
     }  
     
-    private ArrayList<pcbestand> getPCBestand () {
+    private ArrayList<ObjPcbestand> getPCBestand () {
 
-        ArrayList<pcbestand> BestandList = new ArrayList<>();
+        ArrayList<ObjPcbestand> BestandList = new ArrayList<>();
     //    Connection connection = getConnection();
         Connection connection = DBConnection.getConnection2();
         
@@ -108,11 +110,11 @@ public class BuchungRechner extends javax.swing.JFrame {
             st = connection.createStatement();
             //rs = st.executeQuery(query);
             rs = st.executeQuery(query);
-            pcbestand PCBestand;
+            ObjPcbestand PCBestand;
             
             while(rs.next())
             {
-                PCBestand = new pcbestand(rs.getInt("WWS_Nr"), rs.getInt("PCKlassenID"),rs.getString("Hersteller"),rs.getString("Modell"), rs.getBoolean("Aktuell_im_Lager"));
+                PCBestand = new ObjPcbestand(rs.getInt("WWS_Nr"), rs.getInt("PCKlassenID"),rs.getString("Hersteller"),rs.getString("Modell"), rs.getBoolean("Aktuell_im_Lager"));
                 BestandList.add(PCBestand);
             }
         } catch (Exception e) {
@@ -157,7 +159,7 @@ public class BuchungRechner extends javax.swing.JFrame {
     
     private void fillComboBoxItems() {
         
-        ArrayList<pcklasse> pcListe = getPcList();
+        ArrayList<ObjPcklasse> pcListe = getPcList();
         int anzahl = pcListe.size();
 
         String[] itemListe = new String[anzahl];
@@ -174,7 +176,7 @@ public class BuchungRechner extends javax.swing.JFrame {
     
     private void Show_PcBestand_In_JTable()
     {
-        ArrayList<pcbestand> BestandList = getPCBestand();
+        ArrayList<ObjPcbestand> BestandList = getPCBestand();
         
         DefaultTableModel model = (DefaultTableModel)jTable_PCBestand.getModel();
         model.setRowCount(0);
@@ -214,7 +216,9 @@ public class BuchungRechner extends javax.swing.JFrame {
         jTextField_Delete = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jScanEingabe = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
+        jButtonEinlagern = new javax.swing.JButton();
+        jButtonAuslagern = new javax.swing.JButton();
+        jButtonNochmal = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -248,7 +252,11 @@ public class BuchungRechner extends javax.swing.JFrame {
                 "WWS Nr", "PC ID", "im Lager"
             }
         ));
-        jTable_PCBestand.setCellSelectionEnabled(true);
+        jTable_PCBestand.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable_PCBestandMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable_PCBestand);
         jTable_PCBestand.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
@@ -263,10 +271,24 @@ public class BuchungRechner extends javax.swing.JFrame {
         jScanEingabe.setRows(5);
         jScrollPane2.setViewportView(jScanEingabe);
 
-        jButton1.setText("Einlagern");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonEinlagern.setText("Einlagern");
+        jButtonEinlagern.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonEinlagernActionPerformed(evt);
+            }
+        });
+
+        jButtonAuslagern.setText("Auslagern");
+        jButtonAuslagern.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAuslagernActionPerformed(evt);
+            }
+        });
+
+        jButtonNochmal.setText("Nochmal Drucken");
+        jButtonNochmal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNochmalActionPerformed(evt);
             }
         });
 
@@ -283,7 +305,11 @@ public class BuchungRechner extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButtonDelete)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField_Delete, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jTextField_Delete, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(185, 185, 185)
+                                .addComponent(jButtonAuslagern))
+                            .addComponent(jButtonNochmal)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(128, 128, 128)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -297,10 +323,10 @@ public class BuchungRechner extends javax.swing.JFrame {
                                 .addComponent(DruckenButton)
                                 .addGap(157, 157, 157))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(170, 170, 170)
+                        .addGap(116, 116, 116)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jButtonEinlagern, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(34, 34, 34)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
@@ -308,7 +334,7 @@ public class BuchungRechner extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(53, 53, 53)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -322,17 +348,20 @@ public class BuchungRechner extends javax.swing.JFrame {
                             .addComponent(jButtonDelete)
                             .addComponent(jTextField_Delete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton1)
-                                .addGap(44, 44, 44))
-                            .addComponent(menueaufruf, javax.swing.GroupLayout.Alignment.TRAILING)))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonEinlagern)
+                            .addComponent(jButtonAuslagern))
+                        .addGap(44, 44, 44))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(160, Short.MAX_VALUE))
+                .addGap(1, 1, 1)
+                .addComponent(jButtonNochmal)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addComponent(menueaufruf)
+                .addGap(56, 56, 56))
         );
 
         menueaufruf.getAccessibleContext().setAccessibleName("menueaufruf");
@@ -359,9 +388,13 @@ public class BuchungRechner extends javax.swing.JFrame {
         //  java.lang.NumberFormatException abfangen bei falscher Eingabe!!
         int ZahlderLabel = Integer.parseInt(EingabeAnzahl.getText());
 
-        String EinzelQuery = " INSERT INTO PC_Bestand (PCKlassenID) VALUE (" + PCKlassenIDsListe.get(cbm) + ");";
+        String EinzelQuery = " INSERT INTO PC_Bestand (PCKlassenID,Datum_Ein,BenutzerID) VALUES (" 
+                + PCKlassenIDsListe.get(cbm) + ",'" 
+                + printSimpleDateFormat() + "',"
+                + DBConnection.getnUserId() + ");";
         boolean ok;
         String Label;
+//System.out.println(EinzelQuery);
         
         for (int i = 0; i < ZahlderLabel; i++) {
 
@@ -392,21 +425,79 @@ public class BuchungRechner extends javax.swing.JFrame {
         executeSQLQuery(query, "Deleted");        
     }//GEN-LAST:event_jButtonDeleteActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonEinlagernActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEinlagernActionPerformed
         // TODO add your handling code here:
         
         String s = jScanEingabe.getText();
         String[]ss = s.split("\\s");
         for (int i=0;i<ss.length;i++) {
 
-        String s1 = ss[i].substring(6);
-        String s2 = ss[i].substring(0,6);
-        int z1 = Integer.parseInt(s1);
-        int z2 = Integer.parseInt(s2);
-        System.out.println(z1 + " und "+z2); 
+            try {
+                String s1 = ss[i].substring(6);
+                String s2 = ss[i].substring(0,6);
+                int z1 = Integer.parseInt(s1);
+                int z2 = Integer.parseInt(s2);
+                
+                System.out.println(z1 + " und "+z2); 
+                String query = "UPDATE PC_Bestand SET Aktuell_im_Lager = true WHERE WWS_Nr = "+z2+" and PCKlassenID = "+z1;
+                executeSQLQuery(query,"Updated");                
+            } catch (StringIndexOutOfBoundsException|NumberFormatException ex) {
+                System.out.println(ex.getMessage());
+            }        
+        }
+    }//GEN-LAST:event_jButtonEinlagernActionPerformed
+
+    private void jButtonAuslagernActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAuslagernActionPerformed
+        // TODO add your handling code here:
+        String s = jScanEingabe.getText();
+        String[]ss = s.split("\\s");
+        for (int i=0;i<ss.length;i++) {
+
+            try {
+                String s1 = ss[i].substring(6);
+                String s2 = ss[i].substring(0,6);
+                int z1 = Integer.parseInt(s1);
+                int z2 = Integer.parseInt(s2);
+                
+                System.out.println(z1 + " und "+z2); 
+                String query = "UPDATE PC_Bestand SET Aktuell_im_Lager = false WHERE WWS_Nr = "+z2+" and PCKlassenID = "+z1;
+                executeSQLQuery(query,"Updated");                
+            } catch (StringIndexOutOfBoundsException|NumberFormatException ex) {
+                System.out.println(ex.getMessage());
+            }
+
         }
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonAuslagernActionPerformed
+
+    private void jTable_PCBestandMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_PCBestandMouseClicked
+        // TODO add your handling code here:        
+    }//GEN-LAST:event_jTable_PCBestandMouseClicked
+
+    private void jButtonNochmalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNochmalActionPerformed
+        // TODO add your handling code here:
+       
+        int i = jTable_PCBestand.getSelectedRow();
+        if (i>0) {
+/*          besser vielleicht:
+            TableModel model = jTable_PCBestand.getModel();
+            int wwsnr = Integer.parseInt(model.getValueAt(i,0).toString());
+            und mit select PCKlassenID from PC_Bestand where WWS_Nr = wwwsr abfragen
+*/
+            ArrayList<ObjPcbestand> BestandList = getPCBestand();  
+            int wwsnr = BestandList.get(i).get_WWS_Nr();
+            int pcid = BestandList.get(i).get_PCKlassenID();
+            String label = machLabel (wwsnr,pcid);
+            drucken.druckStart(label);
+
+        }   
+        else {
+            JOptionPane.showMessageDialog(null, "Bitte PC auswählen");
+        }
+
+
+        
+    }//GEN-LAST:event_jButtonNochmalActionPerformed
 
 
     private String machLabel (int pcnr, int pctyp) {
@@ -439,6 +530,13 @@ public class BuchungRechner extends javax.swing.JFrame {
         return Label;
     }
 
+        static String printSimpleDateFormat() { 
+        SimpleDateFormat formatter = new SimpleDateFormat( 
+                "yyyy-MM-dd"); 
+        Date currentTime = new Date();
+        return formatter.format(currentTime);
+    //    System.out.println(formatter.format(currentTime));        // 2012.04.14 - 21:34:07  
+    } 
     
     
     /**
@@ -480,8 +578,10 @@ public class BuchungRechner extends javax.swing.JFrame {
     private javax.swing.JButton DruckenButton;
     private javax.swing.JTextField EingabeAnzahl;
     private javax.swing.JComboBox<String> PCKlappliste;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonAuslagern;
     private javax.swing.JButton jButtonDelete;
+    private javax.swing.JButton jButtonEinlagern;
+    private javax.swing.JButton jButtonNochmal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextArea jScanEingabe;
     private javax.swing.JScrollPane jScrollPane1;

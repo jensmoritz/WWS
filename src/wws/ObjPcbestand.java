@@ -9,7 +9,7 @@ package wws;
  *
  * @author bfw
  */
-public class pcbestand {
+public class ObjPcbestand {
     
     private int WWS_Nr;
     private int PCKlassenID;
@@ -19,13 +19,13 @@ public class pcbestand {
     //Datum
     //Fremd_Nr
     
-    public pcbestand (int WWSNR, int PCKLASSENID, boolean LAGER) {
+    public ObjPcbestand (int WWSNR, int PCKLASSENID, boolean LAGER) {
         this.WWS_Nr = WWSNR;
         this.PCKlassenID = PCKLASSENID;
         this.Aktuell_im_Lager = LAGER;        
     }
     
-    public pcbestand (int WWSNR, int PCKLASSENID, String HERSTELLER, String MODELL, boolean LAGER) {
+    public ObjPcbestand (int WWSNR, int PCKLASSENID, String HERSTELLER, String MODELL, boolean LAGER) {
         this.WWS_Nr = WWSNR;
         this.PCKlassenID = PCKLASSENID;
         this.Aktuell_im_Lager = LAGER;        

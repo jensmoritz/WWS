@@ -42,9 +42,9 @@ public class NewJFrame extends javax.swing.JFrame {
     }
     */
     
-    private ArrayList<pcklasse> getPcList()
+    private ArrayList<ObjPcklasse> getPcList()
     {
-        ArrayList<pcklasse> pcList = new ArrayList<pcklasse>();
+        ArrayList<ObjPcklasse> pcList = new ArrayList<ObjPcklasse>();
     //    Connection connection = getConnection();
         Connection connection = DBConnection.getConnection2();
         
@@ -58,11 +58,11 @@ public class NewJFrame extends javax.swing.JFrame {
             st = connection.createStatement();
             //rs = st.executeQuery(query);
             rs = st.executeQuery(query);
-            pcklasse PCKlasse;
+            ObjPcklasse PCKlasse;
             
             while(rs.next())
             {
-                PCKlasse = new pcklasse(rs.getInt("PCKlassenID"), rs.getString("Hersteller"), rs.getString("Modell"));
+                PCKlasse = new ObjPcklasse(rs.getInt("PCKlassenID"), rs.getString("Hersteller"), rs.getString("Modell"));
                 pcList.add(PCKlasse);
             }
         } catch (Exception e) {
@@ -75,7 +75,7 @@ public class NewJFrame extends javax.swing.JFrame {
     
     private void Show_Pcs_In_JTable()
     {
-        ArrayList<pcklasse> list = getPcList();
+        ArrayList<ObjPcklasse> list = getPcList();
         
         DefaultTableModel model = (DefaultTableModel)jTable_Display_Pcs.getModel();
         model.setRowCount(0);

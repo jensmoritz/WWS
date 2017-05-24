@@ -16,9 +16,9 @@ public class Gruppenverwaltung extends javax.swing.JFrame {
         Show_Geraete_In_JTable();
     }
    
-    public ArrayList<Geraete> getGeraeteList()
+    public ArrayList<ObjGeraete> getGeraeteList()
     {
-        ArrayList<Geraete> getGeraeteList = new ArrayList<Geraete>();
+        ArrayList<ObjGeraete> getGeraeteList = new ArrayList<ObjGeraete>();
     //    Connection connection = getConnection();
         Connection connection = DBConnection.getConnection2();
         
@@ -32,11 +32,11 @@ public class Gruppenverwaltung extends javax.swing.JFrame {
             st = connection.createStatement();
             //rs = st.executeQuery(query);
             rs = st.executeQuery(query);
-            Geraete GERAETE;
+            ObjGeraete GERAETE;
             
             while(rs.next())
             {
-                GERAETE = new Geraete(rs.getInt("KlassenID"), rs.getString("Bezeichnung"));
+                GERAETE = new ObjGeraete(rs.getInt("KlassenID"), rs.getString("Bezeichnung"));
                 getGeraeteList.add(GERAETE);
             }
         } catch (Exception e) {
@@ -49,7 +49,7 @@ public class Gruppenverwaltung extends javax.swing.JFrame {
     
     public void Show_Geraete_In_JTable()
     {
-        ArrayList<Geraete> list = getGeraeteList();
+        ArrayList<ObjGeraete> list = getGeraeteList();
         
         DefaultTableModel model = (DefaultTableModel)jTable_Display_Geraete.getModel();
         Object[] row = new Object[2];

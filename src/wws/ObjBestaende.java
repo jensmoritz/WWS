@@ -1,13 +1,13 @@
 
 package wws;
 
-public class Bestaende {
+public class ObjBestaende {
     
     private int KlassenID;
     private String Bezeichnung;
     private int Summe;
     
-    public Bestaende(int BESTAENDE_KLASSENID, String BESTAENDE_BEZEICHNUNG, int BESTAENDE_SUMME)
+    public ObjBestaende(int BESTAENDE_KLASSENID, String BESTAENDE_BEZEICHNUNG, int BESTAENDE_SUMME)
     {        
         this.KlassenID = BESTAENDE_KLASSENID;
         this.Bezeichnung = BESTAENDE_BEZEICHNUNG;

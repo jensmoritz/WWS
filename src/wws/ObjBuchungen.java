@@ -1,7 +1,7 @@
 
 package wws;
 
-public class Buchungen {
+public class ObjBuchungen {
     
     private int bestandsID;
     private int menge;
@@ -10,7 +10,7 @@ public class Buchungen {
     private String buchungsDatum;
     
     
-    public Buchungen(int bestandsID, int menge, String bezeichnung, int benutzerID, String buchungsDatum)
+    public ObjBuchungen(int bestandsID, int menge, String bezeichnung, int benutzerID, String buchungsDatum)
     {  
       
       this.bestandsID = bestandsID;

@@ -41,9 +41,9 @@ static String printSimpleDateFormat() {
   //    System.out.println(formatter.format(currentTime));        // 2012.04.14 - 21:34:07  
 }   
   
-  public ArrayList<Buchungen> getBuchungsListe()
+  public ArrayList<ObjBuchungen> getBuchungsListe()
   {
-    ArrayList<Buchungen> buchungsListe = new ArrayList<Buchungen>();
+    ArrayList<ObjBuchungen> buchungsListe = new ArrayList<ObjBuchungen>();
 
     Connection connection = DBConnection.getConnection2();
 
@@ -57,11 +57,11 @@ static String printSimpleDateFormat() {
         st = connection.createStatement();
 
         rs = st.executeQuery(query);
-        Buchungen BUCHUNGEN;
+        ObjBuchungen BUCHUNGEN;
 
         while(rs.next())
         {
-            BUCHUNGEN = new Buchungen(rs.getInt("BestandID"), rs.getInt("BenutzerID"), rs.getString("Bezeichnung"),rs.getInt("Buchung"), rs.getString("Datum"));
+            BUCHUNGEN = new ObjBuchungen(rs.getInt("BestandID"), rs.getInt("BenutzerID"), rs.getString("Bezeichnung"),rs.getInt("Buchung"), rs.getString("Datum"));
             buchungsListe.add(BUCHUNGEN);
         }
     } catch (Exception e) {
@@ -72,7 +72,7 @@ static String printSimpleDateFormat() {
   
     public void Show_Buchungen_In_JTable()
     {
-        ArrayList<Buchungen> list = getBuchungsListe();
+        ArrayList<ObjBuchungen> list = getBuchungsListe();
         
         DefaultTableModel model = (DefaultTableModel)jTable_Display_Buchungen.getModel();
         Object[] row = new Object[6];

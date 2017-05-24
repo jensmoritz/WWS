@@ -36,11 +36,15 @@ public class DBConnection {
   
   
   public static Connection getConnection2() {
+      
+//    ObjVerbindung verbindung = test_xml.getAktiveVerbindung();
+//    System.out.println(verbindung.getUrl());
+    
     if (myConnection == null) {
       try {
 //        myConnection = DriverManager.getConnection("jdbc:mysql://192.168.151.117/Projekt_WWS", "IT1601", "IT1601"); 
-        myConnection = DriverManager.getConnection("jdbc:mysql://localhost/Projekt_WWS", "root", "");
-        
+//        myConnection = DriverManager.getConnection("jdbc:mysql://localhost/Projekt_WWS", "root", "");
+        myConnection = DriverManager.getConnection("jdbc:mysql://192.168.151.117/Projekt_WWS", "wws", "wws");         
       } catch (Exception e) {
         e.printStackTrace();
       }
