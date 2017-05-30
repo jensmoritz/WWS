@@ -37,8 +37,8 @@ public class DBConnection {
   
   public static Connection getConnection2() {
       
-//    ObjVerbindung verbindung = test_xml.getAktiveVerbindung();
-//    System.out.println(verbindung.getUrl());
+    ObjVerbindung verbindung = test_xml.getAktiveVerbindung();
+    System.out.println(verbindung.getUrl()+","+verbindung.getBenutzer()+","+verbindung.getPasswort());
     
     if (myConnection == null) {
       try {
