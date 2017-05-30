@@ -39,6 +39,7 @@ public class menue extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         menue_etikettendruck1 = new javax.swing.JButton();
         menue_etikettendruck2 = new javax.swing.JButton();
+        BenVer = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1024, 768));
@@ -107,6 +108,13 @@ public class menue extends javax.swing.JFrame {
             }
         });
 
+        BenVer.setText("Benutzer / Verwaltung");
+        BenVer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BenVerActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -125,6 +133,7 @@ public class menue extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BenVer)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -173,7 +182,9 @@ public class menue extends javax.swing.JFrame {
                         .addComponent(menue_etikettendruck2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(54, 54, 54)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(320, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(BenVer)
+                .addContainerGap(279, Short.MAX_VALUE))
         );
 
         pack();
@@ -233,6 +244,13 @@ public class menue extends javax.swing.JFrame {
     
   }//GEN-LAST:event_menue_etikettendruck2ActionPerformed
 
+    private void BenVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BenVerActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        BenVerVerwaltung mm = new BenVerVerwaltung();
+        mm.setVisible(true);
+    }//GEN-LAST:event_BenVerActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -269,6 +287,7 @@ public class menue extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BenVer;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

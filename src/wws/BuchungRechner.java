@@ -252,6 +252,7 @@ public class BuchungRechner extends javax.swing.JFrame {
                 "WWS Nr", "PC ID", "im Lager"
             }
         ));
+        jTable_PCBestand.setColumnSelectionAllowed(true);
         jTable_PCBestand.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable_PCBestandMouseClicked(evt);
