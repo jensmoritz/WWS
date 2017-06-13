@@ -108,7 +108,7 @@ public class menue extends javax.swing.JFrame {
             }
         });
 
-        BenVer.setText("Benutzer / Verwaltung");
+        BenVer.setText("Benutzer / Verbindung");
         BenVer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BenVerActionPerformed(evt);
@@ -247,7 +247,7 @@ public class menue extends javax.swing.JFrame {
     private void BenVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BenVerActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        BenVerVerwaltung mm = new BenVerVerwaltung();
+        BenutzerVerbindungen mm = new BenutzerVerbindungen();
         mm.setVisible(true);
     }//GEN-LAST:event_BenVerActionPerformed
 

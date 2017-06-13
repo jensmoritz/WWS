@@ -5,18 +5,19 @@
  */
 package wws;
 
+import java.util.regex.*;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author bfw
  */
-public class NewJDialog extends javax.swing.JDialog {
+public class NeueVerbindungJDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form NewJDialog
      */
-    public NewJDialog(java.awt.Frame parent, boolean modal) {
+    public NeueVerbindungJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -39,6 +40,8 @@ public class NewJDialog extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jButtonEingabe = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jTextDB = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -57,53 +60,61 @@ public class NewJDialog extends javax.swing.JDialog {
             }
         });
 
+        jLabel5.setText("Datenbank");
+
+        jTextDB.setText("Projekt_WWS");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(jButtonEingabe)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addGap(54, 54, 54)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonEingabe)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextName)
-                            .addComponent(jTextUrl)
-                            .addComponent(jTextBenutzer)
-                            .addComponent(jTextPasswort, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE))
-                        .addGap(107, 107, 107))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextName)
+                    .addComponent(jTextUrl)
+                    .addComponent(jTextBenutzer)
+                    .addComponent(jTextPasswort, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+                    .addComponent(jTextDB))
+                .addGap(107, 107, 107))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(46, 46, 46)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextUrl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jTextDB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
-                        .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextUrl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextBenutzer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextBenutzer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextPasswort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jButtonEingabe)
-                .addGap(36, 36, 36))
+                .addGap(24, 24, 24))
         );
 
         pack();
@@ -113,18 +124,36 @@ public class NewJDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         String tName = jTextName.getText();
         String tUrl = jTextUrl.getText();
+        String tDB = jTextDB.getText();
         String tBenutzer = jTextBenutzer.getText();
         String tPasswort = jTextPasswort.getText();
+        
+        String regex1 = "((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\\.){3}"
+                    +"(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])";
+        String regex2 = "[a-zA-Z0-9-]+\\.[a-zA-Z0-9]+(/[a-zA-Z0-9-]+)*";
+        String regex3 = "localhost";
+        String regexDB = "[a-zA-Z0-9_-]+";
+        
         if (tName.isEmpty()) {
             JOptionPane.showMessageDialog(null, "bitte Name eingeben"); 
         } else if (tUrl.isEmpty()) {
-                        JOptionPane.showMessageDialog(null, "bitte URL eingeben"); 
+                        JOptionPane.showMessageDialog(null, "bitte URL eingeben");                         
+        } else if (!(tUrl.matches(regex1)||tUrl.matches(regex2)||tUrl.matches(regex3))) {
+                        JOptionPane.showMessageDialog(null, "URL nicht ok");                                         
+        } else if (tDB.isEmpty()) {
+                                JOptionPane.showMessageDialog(null, "bitte DB Name eingeben");
+        } else if (!tDB.matches(regexDB)) {
+                                JOptionPane.showMessageDialog(null, "DB Name nicht ok");
         } else if (tBenutzer.isEmpty()) {
                         JOptionPane.showMessageDialog(null, "bitte Benutzer eingeben"); 
         } else if (tPasswort.isEmpty()) {
                         JOptionPane.showMessageDialog(null, "bitte Passwort eingeben"); 
         } else   {
-            VerbindungXML.setVerbindung(tName, tUrl, tBenutzer, tPasswort);
+            String regex5 = "^/";
+            String regex6 = "/$";  
+//            if 
+            VerbindungXML.setVerbindung(tName, "jdbc:mysql://"+tUrl+"/"+tDB, tBenutzer, tPasswort);
+           
             this.dispose();            
         }
 
@@ -147,20 +176,21 @@ public class NewJDialog extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NeueVerbindungJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NeueVerbindungJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NeueVerbindungJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NeueVerbindungJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                NewJDialog dialog = new NewJDialog(new javax.swing.JFrame(), true);
+                NeueVerbindungJDialog dialog = new NeueVerbindungJDialog(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -178,7 +208,9 @@ public class NewJDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField jTextBenutzer;
+    private javax.swing.JTextField jTextDB;
     private javax.swing.JTextField jTextName;
     private javax.swing.JTextField jTextPasswort;
     private javax.swing.JTextField jTextUrl;

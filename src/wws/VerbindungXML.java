@@ -21,58 +21,7 @@ import java.io.*;
  */
 public class VerbindungXML {
     
-    static public boolean readXML(String xml) {
-        ArrayList<String> rolev = new ArrayList<String>();
-        Document dom;
-        // Make an  instance of the DocumentBuilderFactory
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        try {
-            // use the factory to take an instance of the document builder
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            // parse using the builder to get the DOM mapping of the    
-            // XML file
-            dom = db.parse(xml);
 
-            Element doc = dom.getDocumentElement();
-
-            String url = "uu";
-            url = getTextValue(url, doc, "url");
-
-            String benutzer = "bb";
-            benutzer = getTextValue(benutzer, doc, "benutzer");
-
-            String passwort = "pp";
-            passwort = getTextValue(passwort, doc, "passwort");
-
- //           System.out.println("u "+url+" b "+benutzer+" p "+passwort );
-            return true;
-
-        } catch (ParserConfigurationException pce) {
-            System.out.println(pce.getMessage());
-        } catch (SAXException se) {
-            System.out.println(se.getMessage());
-        } catch (IOException ioe) {
-            System.err.println(ioe.getMessage());
-        }
-
-        return false;
-    }
-    
-    
-    static private String getTextValue(String def, Element doc, String tag) {
-    String value = def;
-    NodeList nl;
-    nl = doc.getElementsByTagName(tag);
-    if (nl.getLength() > 0 && nl.item(0).hasChildNodes()) {
-        for (int j=0;j<nl.getLength();j++) {
-            System.out.println(j+nl.item(j).getFirstChild().getNodeValue());
-        }
-        nl.item(0).getAttributes();
-//        value = nl.item(0).getFirstChild().getNodeValue();
-//        System.out.println(nl.getLength()+" "+value);
-    }
-    return value;
-}
 
     static public ArrayList<ObjVerbindung> getVerbindungenliste() {
         String ak_url;
@@ -164,8 +113,8 @@ public static void setVerbindung (String Name, String Url, String Benutzer, Stri
             e.setAttribute("passwort", ov.get(i).getPasswort());
             e.setAttribute("benutzer", ov.get(i).getBenutzer());
             e.setAttribute("url", ov.get(i).getUrl());
-            e.setAttribute("aktiv", Boolean.toString(ov.get(i).getAktiv()));
-
+//            e.setAttribute("aktiv", Boolean.toString(ov.get(i).getAktiv()));
+            e.setAttribute("aktiv","false");
             e.appendChild(dom.createTextNode(ov.get(i).getName()));
             rootEle.appendChild(e);            
         }
@@ -175,8 +124,7 @@ public static void setVerbindung (String Name, String Url, String Benutzer, Stri
             e.setAttribute("passwort", Passwort);
             e.setAttribute("benutzer", Benutzer);
             e.setAttribute("url", Url);
-            e.setAttribute("aktiv", "false");
-
+            e.setAttribute("aktiv", "true");
             e.appendChild(dom.createTextNode(Name));
             rootEle.appendChild(e);                    
 
@@ -200,9 +148,137 @@ public static void setVerbindung (String Name, String Url, String Benutzer, Stri
             System.out.println(ioe.getMessage());
         }
         } catch (ParserConfigurationException pce) {
-        System.out.println("UsersXML: Error trying to instantiate DocumentBuilder " + pce);
+        System.out.println("UsersXML: Error trying to instantiate DocumentBuilder " + pce.getMessage());
     }
 }
+
+
+
+
+public static boolean setVerbindungAktiv (String Name) {
+    Document dom;
+    Element e;
+
+
+    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+    try {
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        dom = db.newDocument();
+        
+        ArrayList<ObjVerbindung> ov = getVerbindungenliste();
+        
+        
+        Element rootEle = dom.createElement("verbindungenliste");
+
+        for (int i=0;i<ov.size();i++) {
+            e = dom.createElement("verbindung");
+            e.setAttribute("passwort", ov.get(i).getPasswort());
+            e.setAttribute("benutzer", ov.get(i).getBenutzer());
+            e.setAttribute("url", ov.get(i).getUrl());
+//            e.setAttribute("aktiv", Boolean.toString(ov.get(i).getAktiv()));
+            if (Name.equals(ov.get(i).getName())) {
+                e.setAttribute("aktiv","true");                
+            }  else e.setAttribute("aktiv", "false");
+            e.appendChild(dom.createTextNode(ov.get(i).getName()));
+            rootEle.appendChild(e);            
+        }
+        // create data elements and place them under root
+
+
+        dom.appendChild(rootEle);
+
+        try {
+            Transformer tr = TransformerFactory.newInstance().newTransformer();
+            tr.setOutputProperty(OutputKeys.INDENT, "yes");
+            tr.setOutputProperty(OutputKeys.METHOD, "xml");
+            tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+//            tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "roles.dtd");
+//            tr.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+
+            // send DOM to file
+            tr.transform(new DOMSource(dom),  new StreamResult(new FileOutputStream("db2.xml")));
+            
+            return true;
+
+        } catch (TransformerException te) {
+            System.out.println(te.getMessage());
+            return false;
+        } catch (IOException ioe) {
+            System.out.println(ioe.getMessage());
+            return false;
+        }
+    } catch (ParserConfigurationException pce) {
+        System.out.println("UsersXML: Error trying to instantiate DocumentBuilder " + pce.getMessage());
+        return false;
+    }
+}
+
+
+public static boolean deleteVerbindung (String Name) {
+    Document dom;
+    Element e;
+
+
+    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+    try {
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        dom = db.newDocument();
+        
+        ArrayList<ObjVerbindung> ov = getVerbindungenliste();
+        
+        
+        Element rootEle = dom.createElement("verbindungenliste");
+
+        for (int i=0;i<ov.size();i++) {
+            if (!Name.equals(ov.get(i).getName())) {
+     
+                e = dom.createElement("verbindung");
+                e.setAttribute("passwort", ov.get(i).getPasswort());
+                e.setAttribute("benutzer", ov.get(i).getBenutzer());
+                e.setAttribute("url", ov.get(i).getUrl());
+                e.setAttribute("aktiv", Boolean.toString(ov.get(i).getAktiv()));
+                e.appendChild(dom.createTextNode(ov.get(i).getName()));
+                rootEle.appendChild(e);            
+            }
+        }
+        // create data elements and place them under root
+
+
+        dom.appendChild(rootEle);
+
+        try {
+            Transformer tr = TransformerFactory.newInstance().newTransformer();
+            tr.setOutputProperty(OutputKeys.INDENT, "yes");
+            tr.setOutputProperty(OutputKeys.METHOD, "xml");
+            tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+//            tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "roles.dtd");
+//            tr.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+
+            // send DOM to file
+            tr.transform(new DOMSource(dom),  new StreamResult(new FileOutputStream("db2.xml")));
+            
+            return true;
+
+        } catch (TransformerException te) {
+            System.out.println(te.getMessage());
+            return false;
+        } catch (IOException ioe) {
+            System.out.println(ioe.getMessage());
+            return false;
+        }
+    } catch (ParserConfigurationException pce) {
+        System.out.println("UsersXML: Error trying to instantiate DocumentBuilder " + pce.getMessage());
+        return false;
+    }
+}
+
+
+
+
+
+
+
+
 
 
 

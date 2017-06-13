@@ -6,18 +6,22 @@
 package wws;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
  * @author bfw
  */
-public class BenVerVerwaltung extends javax.swing.JFrame {
+public class BenutzerVerbindungen extends javax.swing.JFrame {
 
     /**
      * Creates new form BenVerVerwaltung
      */
-    public BenVerVerwaltung() {
+    public BenutzerVerbindungen() {
         initComponents();
         Show_Verbindungen_In_JTable();
     }
@@ -29,10 +33,21 @@ public class BenVerVerwaltung extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel)jTableVerbindungen.getModel();
         model.setRowCount(0);
         Object[] row = new Object[5];
+        String regex1 = "^([a-z]{4,5}:)+//"; 
+        String regex2 = "/Projekt_WWS$";
+//        String regex = "jdbc:mysql:";
+
+        Pattern p1 = Pattern.compile(regex1);
+        Pattern p2 = Pattern.compile(regex2);
+        
+        
         for(int i = 0; i < VerbindungenListe.size(); i++)
         {
             row[0] = VerbindungenListe.get(i).getName();
-            row[1] = VerbindungenListe.get(i).getUrl();
+            Matcher m = p1.matcher(VerbindungenListe.get(i).getUrl());    
+            //      entfernt auch /Projekt_WWS:
+            //           m = p2.matcher(m.replaceFirst(""));
+            row[1] = m.replaceFirst("");
             row[2] = VerbindungenListe.get(i).getBenutzer();
             row[3] = VerbindungenListe.get(i).getPasswort();
             row[4] = VerbindungenListe.get(i).getAktiv();
@@ -55,13 +70,14 @@ public class BenVerVerwaltung extends javax.swing.JFrame {
         menue = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableVerbindungen = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        jButtonDBHinzufuegen = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        jButtonDBLoeschen = new javax.swing.JButton();
+        jButtonAktiv = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1024, 768));
 
         menue.setText("Menue");
         menue.addActionListener(new java.awt.event.ActionListener() {
@@ -80,10 +96,10 @@ public class BenVerVerwaltung extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTableVerbindungen);
 
-        jButton1.setText("Hinzufügen");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonDBHinzufuegen.setText("Hinzufügen");
+        jButtonDBHinzufuegen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonDBHinzufuegenActionPerformed(evt);
             }
         });
 
@@ -102,6 +118,20 @@ public class BenVerVerwaltung extends javax.swing.JFrame {
 
         jLabel1.setText("DB Verbindungen");
 
+        jButtonDBLoeschen.setText("Löschen");
+        jButtonDBLoeschen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDBLoeschenActionPerformed(evt);
+            }
+        });
+
+        jButtonAktiv.setText("Aktiv setzen");
+        jButtonAktiv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAktivActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -114,7 +144,12 @@ public class BenVerVerwaltung extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(67, 67, 67)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButtonDBHinzufuegen)
+                                .addGap(50, 50, 50)
+                                .addComponent(jButtonDBLoeschen)
+                                .addGap(52, 52, 52)
+                                .addComponent(jButtonAktiv))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 548, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1))))
@@ -128,7 +163,10 @@ public class BenVerVerwaltung extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonDBHinzufuegen)
+                    .addComponent(jButtonDBLoeschen)
+                    .addComponent(jButtonAktiv))
                 .addGap(146, 146, 146)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(226, 226, 226)
@@ -146,11 +184,44 @@ public class BenVerVerwaltung extends javax.swing.JFrame {
         mm.setVisible(true);
     }//GEN-LAST:event_menueActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonDBHinzufuegenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDBHinzufuegenActionPerformed
         // TODO add your handling code here:
-        NewJDialog nn = new NewJDialog(this,true);
+        NeueVerbindungJDialog nn = new NeueVerbindungJDialog(this,true);
         nn.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonDBHinzufuegenActionPerformed
+
+    private void jButtonDBLoeschenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDBLoeschenActionPerformed
+        // TODO add your handling code here:
+
+                
+        int i = jTableVerbindungen.getSelectedRow();
+        TableModel tm = jTableVerbindungen.getModel();
+//        System.out.println(tm.getValueAt(i, 0));
+        
+        if (tm.getValueAt(i,4).toString().equals("true")) {
+            Object[] options = {"Ja","Nein"};
+            int n = JOptionPane.showOptionDialog(null, "aktive db löschen?","db",JOptionPane.YES_NO_OPTION
+            ,JOptionPane.QUESTION_MESSAGE,null,options,options[1]);
+            
+            System.out.println("no "+n);
+            if(n==0) {
+                boolean ok = VerbindungXML.deleteVerbindung(tm.getValueAt(i,0).toString());
+                if (ok) {Show_Verbindungen_In_JTable();}
+            }
+            
+        }  else {        
+            boolean ok = VerbindungXML.deleteVerbindung(tm.getValueAt(i,0).toString());
+            if (ok) {Show_Verbindungen_In_JTable();}
+        }
+    }//GEN-LAST:event_jButtonDBLoeschenActionPerformed
+
+    private void jButtonAktivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAktivActionPerformed
+        // TODO add your handling code here:
+        int i = jTableVerbindungen.getSelectedRow();
+        TableModel tm = jTableVerbindungen.getModel();
+        boolean ok = VerbindungXML.setVerbindungAktiv(tm.getValueAt(i,0).toString());
+        if (ok) {Show_Verbindungen_In_JTable();}
+    }//GEN-LAST:event_jButtonAktivActionPerformed
 
     /**
      * @param args the command line arguments
@@ -169,26 +240,29 @@ public class BenVerVerwaltung extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BenVerVerwaltung.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BenutzerVerbindungen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BenVerVerwaltung.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BenutzerVerbindungen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BenVerVerwaltung.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BenutzerVerbindungen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BenVerVerwaltung.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BenutzerVerbindungen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BenVerVerwaltung().setVisible(true);
+                new BenutzerVerbindungen().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonAktiv;
+    private javax.swing.JButton jButtonDBHinzufuegen;
+    private javax.swing.JButton jButtonDBLoeschen;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
