@@ -76,6 +76,7 @@ public class BenutzerVerbindungen extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButtonDBLoeschen = new javax.swing.JButton();
         jButtonAktiv = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -132,6 +133,8 @@ public class BenutzerVerbindungen extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("jButton1");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -151,8 +154,10 @@ public class BenutzerVerbindungen extends javax.swing.JFrame {
                                 .addGap(52, 52, 52)
                                 .addComponent(jButtonAktiv))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 548, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))))
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jButton1)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(90, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -167,7 +172,9 @@ public class BenutzerVerbindungen extends javax.swing.JFrame {
                     .addComponent(jButtonDBHinzufuegen)
                     .addComponent(jButtonDBLoeschen)
                     .addComponent(jButtonAktiv))
-                .addGap(146, 146, 146)
+                .addGap(58, 58, 58)
+                .addComponent(jButton1)
+                .addGap(65, 65, 65)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(226, 226, 226)
                 .addComponent(menue)
@@ -260,6 +267,7 @@ public class BenutzerVerbindungen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonAktiv;
     private javax.swing.JButton jButtonDBHinzufuegen;
     private javax.swing.JButton jButtonDBLoeschen;
