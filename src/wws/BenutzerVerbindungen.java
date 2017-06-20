@@ -266,6 +266,8 @@ public class BenutzerVerbindungen extends javax.swing.JFrame {
         });
     }
 
+    /*hallo*/
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonAktiv;
